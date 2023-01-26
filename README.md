@@ -2,8 +2,10 @@
 
 # Maintenance🛠️
 ## Doker
-## Validate request
 ## Refactor code
-### -be 
+### be 
+-check unique username 
+-Validate request
 ### -fn
+-alert error case
 
