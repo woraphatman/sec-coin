@@ -1,8 +1,8 @@
 # sec-coin
 
-###Maintenance🛠️
-#Validate request
-#Refactor code
+### Maintenance🛠️
+# Validate request
+# Refactor code
 -be 
 -fn
 
