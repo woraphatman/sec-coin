@@ -6,8 +6,8 @@ import { checkAccessToken } from "../middlewares/middleware";
 
 const router = express.Router();
 
-router.use("/users" , [checkAccessToken],userRouter);
+router.use("/users" ,checkAccessToken,userRouter);
 router.use("/auth", authRouter);
-router.use("/coin", [checkAccessToken], coinRouter);
+router.use("/coin", coinRouter);
 
 export default router;

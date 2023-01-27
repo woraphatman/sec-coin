@@ -23,18 +23,21 @@ const UserProvider = ({ children }: PropType) => {
   useEffect(() => {
     const token = localStorage.getItem('Token');
     if (token) {
-      axios.get(`http://localhost:4000/auth/user`,{
+       axios.get(`http://localhost:4000/auth/user`,{
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         }})
         .then((res) => {
           setId(res.data.sub.id)
           setUsername(res.data.sub.user)
+          
       })
     } else {
       setUser(false);
+    
     }
-  }, [user,myArray]);
+  }, [user, myArray]);
+
   return (
    
     <CountContext.Provider value={value}>{children}</CountContext.Provider>

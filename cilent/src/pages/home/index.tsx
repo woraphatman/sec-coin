@@ -11,13 +11,15 @@ const Home = () => {
   const { current: myArray } = useRef(["one", "two", "three"]);
   const [coin, setCoin] = useState(0);
   const [showModal, setShowModal] = useState<string>("");
-  const [ coinid,setCoinId] = useState(0);
-  const {  id, username } = useContext(CountContext);
-  const token = localStorage.getItem("token") as string;
+  const [coinid, setCoinId] = useState(0);
+  const { id, username } = useContext(CountContext);
+  const token = localStorage.getItem("Token") as string;
   const userData = async () => {
-    const data: any = await axios.get(`http://localhost:4000/users/${id}`,{headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
-    }});
+    const data: any = await axios.get(`http://localhost:4000/users/user`, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    });
     setCoin(data?.data?.message?.coin?.totalcoin);
     setCoinId(data?.data?.message?.coin?.coinid);
     initSocket(data?.data?.message?.coin?.coinid);
@@ -34,21 +36,23 @@ const Home = () => {
       });
     });
   };
- 
 
-
-const deleteUser = ()=> {axios.delete(`http://localhost:4000/users/${id}`,{headers: {
-  Authorization: `Bearer ${JSON.parse(token)}`,
-}}).then((res) => {
-  
-  console.log(res);
-localStorage.removeItem("token")
-navigate("/");
-})}
+  const deleteUser = () => {
+    axios
+      .delete(`http://localhost:4000/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.removeItem("token");
+        navigate("/");
+      });
+  };
 
   useEffect(() => {
     userData();
-   
   }, [myArray]);
 
   const Logout = () => {
@@ -66,12 +70,11 @@ navigate("/");
           <div className="flex items-center justify-center space-x-4">
             <h2 className="font-semibold text-slate-900">USER {username}</h2>
             <button
-            onClick={() => setShowModal("edit")}
-              className="h-10 px-6 font-semibold rounded-md bg-green-400 text-white"
+              onClick={() => setShowModal("delete")}
+              className="h-10 px-6 font-semibold rounded-md bg-red-300 border border-slate-200 text-slate-900"
             >
-              Edit
+              Delete
             </button>
-          
           </div>
 
           <a
@@ -97,10 +100,9 @@ navigate("/");
           </a>
         </div>
       </header>
-      
 
       <Data />
-      
+
       {showModal === "delete" ? (
         <>
           <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -114,9 +116,9 @@ navigate("/");
                       </h3>
                       <div className="mt-2">
                         <div className="mt-4">
-                          <span className="text-gray-700">You want delete User {username}</span>
-            
-                          
+                          <span className="text-gray-700">
+                            You want delete User {username}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -125,15 +127,14 @@ navigate("/");
                     <button
                       type="submit"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                      onClick={() => setShowModal("")}
+                      onClick={() => deleteUser()}
                     >
                       Submit
                     </button>
                     <button
                       type="button"
-                      onClick={() => deleteUser()}
+                      onClick={() => setShowModal("")}
                       className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                     
                     >
                       Cancel
                     </button>

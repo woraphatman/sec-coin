@@ -5,14 +5,12 @@ import { useEffect } from "react";
 const Data = () => {
   const [data, setData] = useState([]);
   const { current: myArray } = useRef(["one", "two", "three"]);
-  const token = localStorage.getItem("token") as string;
-
+  const token = localStorage.getItem("Token") as string;
   const lists = async () => {
     const data: any = await axios.get(`http://localhost:4000/users`,{
       headers: {
       Authorization: `Bearer ${JSON.parse(token)}`,
      }});
-    console.log("data", data);
     setData(data.data.message);
   };
 
@@ -29,7 +27,7 @@ const Data = () => {
         console.log(res);
       })
       .catch((err: any) => {
-          alert("Enter Number");
+            
         console.log(err);
       });
   };
@@ -51,7 +49,6 @@ const Data = () => {
         <li className="flex" key={index}>
           <div className="hover:border-purple-500 hover:border-solid hover:bg-rose-700 hover:text-blue-500 group w-full flex flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 text-sm leading-6 text-slate-900 font-medium py-3">
             {item.username}
-
             <input
               type="text"
               className="px-3 py-3 flex justify-center "
